@@ -2,6 +2,10 @@
 fizzbuzz :: [String]
 fizzbuzz = [if x `mod` 15 == 0 then "fizzbuzz" else if x `mod` 3 == 0 then "fizz" else if x `mod` 5 == 0 then "buzz" else show x | x <- [1..]]
 
+{-2-}
+dotsInCircle :: (Double, Double) -> Double -> [(Double, Double)] -> [(Double, Double)]
+dotsInCircle (x, y) r arr = [(a, b) | (a, b) <- arr, ((a - x)^2 + (b - y)^2) <= r^2]
+
 {-3-}
 setAnd :: [Int] -> [Int] -> [Int]
 setAnd lst1 lst2 = [x | x <- lst1, y <- lst2, x == y]
