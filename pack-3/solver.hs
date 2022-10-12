@@ -22,6 +22,20 @@ volume n = if n `div` 10 == 0 then 1 else 1 + volume (n `div` 10)
 degree :: Int -> Bool
 degree n = if n `mod` 2 == 1 && n /= 1 then False else if n >= 2 then degree (n `div` 2) else if n == 1 then True else False
 
+{-4-}
+sequenceByPred :: (Int -> Int) -> Int -> [Int]
+sequenceByPred f start = start : sequenceByPred f second
+    where second = f start
+
+{-5-}
+sequenceByPred2 :: (Int -> Int -> Int) -> Int -> Int -> [Int]
+sequenceByPred2 f start1 start2 = 
+    start1 : start2 : sequenceByPred2 f third fourth
+    where third = f start1 start2
+          fourth = f start2 third
+
+fibs = sequenceByPred2 (+) 1 1
+
 {-6 Collatz Conjecture-}
 count :: Int -> Int
 count n = helper 0 n
