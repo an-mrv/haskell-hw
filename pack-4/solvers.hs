@@ -26,6 +26,14 @@ digit x |(x == '0') = 0
         |otherwise = 9
 
 {-4-}
-lost :: [Int] -> Int {-список чисел с пропущенным элементом -> пропущенный элемент-}
+mysort :: [Int] -> [Int]
+mysort [] = []
+mysort (x:xs) = 
+    let small = mysort [n | n <- xs, n <= x]
+        big = mysort [n | n <- xs, n > x]
+    in small ++ [x] ++ big
+
+lost' :: [Int] -> Int --список чисел с пропущенным элементом -> пропущенный элемент
+lost' s = lost (mysort s)
 lost s | (head (tail s) - head s > 1) = (head s + 1)
        | otherwise = lost (tail s)
