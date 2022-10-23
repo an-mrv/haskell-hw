@@ -37,3 +37,9 @@ lost' :: [Int] -> Int --список чисел с пропущенным эле
 lost' s = lost (mysort s)
 lost s | (head (tail s) - head s > 1) = (head s + 1)
        | otherwise = lost (tail s)
+
+lost'' :: [Int] -> Int
+lost'' s = 
+    predicted_sum - real_sum
+    where predicted_sum = ((1 + maximum s) * maximum s) `div` 2
+          real_sum = sum s
