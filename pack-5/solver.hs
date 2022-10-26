@@ -19,10 +19,6 @@ maybeInit(x:xs) = Just $ init' x xs
         where init' _ [] = []
               init' y (x:xs) = y : init' x xs
 
-f :: (a -> Bool) -> a -> Bool
-f func a = func a
-
-
 maybeFind :: (a -> Bool) -> [a] -> Maybe a
 maybeFind _ []  = Nothing
 maybeFind predicate s = find' predicate 0 s 
