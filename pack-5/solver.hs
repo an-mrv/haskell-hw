@@ -21,10 +21,8 @@ maybeInit(x:xs) = Just $ init' x xs
 
 maybeFind :: (a -> Bool) -> [a] -> Maybe a
 maybeFind _ []  = Nothing
-maybeFind predicate s = find' predicate 0 s 
-find' predicate len s | (len == length s) = Nothing
-                      | predicate (s !! len) = Just $ (s !! len)
-                      | otherwise = find' predicate (len + 1) s
+maybeFind predicate (x:xs) | predicate x = Just $ x
+                           | otherwise = maybeFind predicate xs
                              
 --task 3
 data DogBreed = GoldenRetrievers
@@ -64,16 +62,10 @@ dogs = [ Dog "Leander" 12 Male Beagle False
        , Dog "Iacchus" 4 Female Beagle True ]
 
 goodBoys :: [Dog]
-goodBoys = goodBoys' [] 0
-goodBoys' s len | (len == length dogs) = s
-                | ((isGoodBoy $ (dogs !! len)) == True) = dogs !! len : goodBoys' s (len+1)
-                | otherwise = goodBoys' s (len+1)
+goodBoys = [x | x <- dogs, isGoodBoy $ x]  
 
 longNamedDogs :: [Dog]
-longNamedDogs = longNamedDogs' [] 0
-longNamedDogs' s len | (len == length dogs) = s
-                     | (length(name $ (dogs !! len)) > 7) = dogs !! len : longNamedDogs' s (len+1)
-                     | otherwise = longNamedDogs' s (len+1)
+longNamedDogs = [x | x <- dogs, (length $ name $ x) > 7]
 
 mostPopularDogGender :: Gender
 mostPopularDogGender = mostPopularDogGender' 0 0 0
@@ -100,7 +92,6 @@ data Complex = Complex { real_part :: Double
 
 summ :: Complex -> Complex -> Complex
 summ a b = Complex (real_part a + real_part b) (imaginary_part a + imaginary_part b)
---summ (Complex 1 2) (Complex 3 4)
 
 diff :: Complex -> Complex -> Complex
 diff a b = Complex (real_part a - real_part b) (imaginary_part a - imaginary_part b)
