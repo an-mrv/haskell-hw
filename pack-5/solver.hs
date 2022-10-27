@@ -68,21 +68,16 @@ longNamedDogs :: [Dog]
 longNamedDogs = [x | x <- dogs, (length $ name $ x) > 7]
 
 mostPopularDogGender :: Gender
-mostPopularDogGender = mostPopularDogGender' 0 0 0
-mostPopularDogGender' len m f | (len == length dogs) = if m > f then Male else Female
-                              | ((gender $ (dogs !! len)) == Male) = mostPopularDogGender' (len + 1) (m + 1) f
-                              | otherwise = mostPopularDogGender' (len + 1) m (f + 1)
+mostPopularDogGender = help (length [x | x <- dogs, gender x == Male]) (length [x | x <- dogs, gender x == Female])
+                    where help m f | (m > f) = Male
+                                   | otherwise = Female
 
 averageDogAge :: Double
-averageDogAge = averageDogAge' 0 0
-averageDogAge' sum_age len | (len == length dogs) = (fromIntegral sum_age / fromIntegral len)
-                           | otherwise = averageDogAge' (sum_age + (age $ (dogs !! len))) (len + fromInteger 1) 
+averageDogAge = fromIntegral (sum s) / fromIntegral (length s)
+            where s = [age x | x <- dogs]
 
 dogsByBreed :: DogBreed -> [Dog]
-dogsByBreed br = dogsByBreed' br [] 0
-dogsByBreed' br s len | (len == length dogs) = s
-                      | ((breed $ (dogs !! len)) == br) = dogs !! len : dogsByBreed' br s (len+1)
-                      | otherwise = dogsByBreed' br s (len+1)
+dogsByBreed br = [x | x <- dogs, breed x == br]
 
 -- task 4.1
 
