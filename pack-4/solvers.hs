@@ -13,17 +13,17 @@ lst x = lst (x `div` 10) ++ [x `mod` 10]
 {-3-}
 toint :: String -> Int
 toint "" = 0
-toint s = digit (last s) + (toint (init s) * 10)
-digit x |(x == '0') = 0
-        |(x == '1') = 1
-        |(x == '2') = 2 
-        |(x == '3') = 3
-        |(x == '4') = 4
-        |(x == '5') = 5
-        |(x == '6') = 6
-        |(x == '7') = 7
-        |(x == '8') = 8
-        |otherwise = 9
+toint s = foldl (\acc x -> digit x + acc * 10) 0 s
+        where digit x |(x == '0') = 0
+                      |(x == '1') = 1
+                      |(x == '2') = 2 
+                      |(x == '3') = 3
+                      |(x == '4') = 4
+                      |(x == '5') = 5
+                      |(x == '6') = 6
+                      |(x == '7') = 7
+                      |(x == '8') = 8
+                      |otherwise = 9
 
 {-4-}
 mysort :: [Int] -> [Int]
