@@ -115,6 +115,10 @@ toList :: MyList a -> [a]
 toList Empty = []
 toList s = (listHead $ s) : (toList (listTail $ s))
 
+reverseMyList :: MyList a -> MyList a
+reverseMyList s = reverse' (toList s)
+                where reverse' s = fromList(foldl (\acc x -> x : acc) [] s)
+
 mapMyList :: (a -> b) -> MyList a -> MyList b
 mapMyList _ Empty = Empty
 mapMyList func s = Cons (func (listHead $ s)) (mapMyList func (listTail $ s))
