@@ -115,6 +115,11 @@ toList :: MyList a -> [a]
 toList Empty = []
 toList s = (listHead $ s) : (toList (listTail $ s))
 
+mapMyList :: (a -> b) -> MyList a -> MyList b
+mapMyList _ Empty = Empty
+mapMyList func s = Cons (func (listHead $ s)) (mapMyList func (listTail $ s))
+-- Пример вызова: mapMyList (\x -> x + 5) Cons {listHead = 3, listTail = Cons {listHead = 4, listTail = Cons {listHead = 5, listTail = Empty}}}
+
 {-data MyList a = MyList { myhead :: a
                         , mytail :: [a]
                         } deriving (Show)
