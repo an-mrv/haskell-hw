@@ -103,7 +103,19 @@ conjugate a = Complex (real_part a) (- imaginary_part a)
 absolute_val :: Complex -> Double
 absolute_val a = sqrt ((real_part a) ^ 2 + (imaginary_part a) ^ 2)
 
-data MyList a = MyList { myhead :: a
+data MyList a = Empty | Cons { listHead :: a, listTail :: MyList a}
+    deriving (Show, Read, Eq, Ord)
+-- 3 `Cons` (4 `Cons` (5 `Cons` Empty)) Пример вызова
+
+fromList :: [a] -> MyList a
+fromList [] = Empty
+fromList (x:xs) = Cons x (fromList xs)
+
+toList :: MyList a -> [a]
+toList Empty = []
+toList s = (listHead $ s) : (toList (listTail $ s))
+
+{-data MyList a = MyList { myhead :: a
                         , mytail :: [a]
                         } deriving (Show)
 
@@ -118,4 +130,4 @@ reverseMyList s = MyList (last $ mytail $ s) (reverse' ((myhead $ s) : init (myt
                 where reverse' = foldl (\acc x -> x : acc) []
 
 mapMyList :: (a -> b) -> MyList a -> MyList b
-mapMyList func s = MyList (func(myhead $ s)) ([func x | x <- (mytail $ s)])
+mapMyList func s = MyList (func(myhead $ s)) ([func x | x <- (mytail $ s)])-}
