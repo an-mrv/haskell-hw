@@ -1,3 +1,16 @@
+--task 2
+data Suit = Hearts | Tiles | Clovers | Pikes
+        deriving Eq
+type Value = Int
+data Card = JokerA | JokerB | Card Suit Value
+        deriving Eq
+
+f :: [Card] -> Bool
+f s = if length (f' s []) == 54 then True else False
+f' [] acc = acc
+f' (x:xs) acc | (x `elem` acc) = f' xs acc
+              | otherwise = f' xs (x : acc)
+              
 --task 3
 powerset :: [a] -> [[a]]
 powerset [] = [[]]
