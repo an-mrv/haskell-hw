@@ -1,3 +1,24 @@
+{-# LANGUAGE DeriveFoldable #-}
+
+import Data.Maybe (isJust)
+
+--task 1
+data Tree a = Empty
+            | Leaf a
+            | Node (Tree a) a (Tree a)
+    deriving (Eq, Foldable)
+
+data Cat = Cat deriving (Eq)
+
+tree1 :: Tree (Maybe Cat)
+tree1 = Node Empty Nothing (Node (Node (Leaf Nothing) Nothing (Node Empty Nothing (Leaf (Just Cat)))) Nothing (Node (Leaf Nothing) Nothing Empty))
+
+findCat :: Tree (Maybe Cat) -> Int --Если кота нет, то напечатает 0
+findCat a = findCat' a 0
+        where findCat' Empty acc = acc
+              findCat' (Leaf maybeCat) acc = if isJust maybeCat then acc else 0
+              findCat' (Node leftTree maybeCat rightTree) acc | isJust maybeCat = acc
+                                                              | otherwise = max (findCat' leftTree (acc + 1)) (findCat' rightTree (acc + 1))
 --task 2
 data Suit = Hearts | Tiles | Clovers | Pikes
         deriving Eq
