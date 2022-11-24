@@ -62,6 +62,30 @@ toint' s = foldl (\acc x -> digit x + acc * 10) 0 s
                       |(x == '8') = 8
                       |otherwise = 9
 
+--task 6 (Histogram)
+makeHistogram :: Show a => Eq a => [a] -> String
+makeHistogram s = buildResultString (count (unique s) s) (length s)
+
+unique :: Eq a => [a] -> [a]
+unique s = unique' s []
+unique' [] acc  = acc
+unique' (x:xs) acc | (elem x acc) = unique' xs acc
+                   | otherwise = unique' xs (acc ++ [x])
+
+count :: Eq a => [a] -> [a] -> [(a, Int)]
+count l s = map (\x -> (x, func x s) ) l
+        where func :: Eq a => a -> [a] -> Int
+              func n = foldl (\acc x -> if n == x then acc + 1 else acc) 0            
+
+buildResultString :: Show a => [(a, Int)] -> Int -> String 
+buildResultString allResults len = "Total: " ++ show len ++ " elem\n" ++ rest
+        where rest :: String
+              rest = unlines $ map makePrettyLine allResults
+              makePrettyLine :: Show a => (a, Int) -> String
+              makePrettyLine (el, n) = show el ++ " : " ++ makeSticks n 
+              makeSticks :: Int -> String
+              makeSticks x = take x $ repeat '|'
+
 --task 7 (matrix)
 transposition :: [[Char]] -> [[Char]]  
 transposition m = [[m !! a !! b | a <- [0..(length (m) - 1)]] | b <- [0..(length (m !! 0) - 1)]]
