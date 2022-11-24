@@ -19,6 +19,14 @@ findCat a = findCat' a 0
               findCat' (Leaf maybeCat) acc = if isJust maybeCat then acc else 0
               findCat' (Node leftTree maybeCat rightTree) acc | isJust maybeCat = acc
                                                               | otherwise = max (findCat' leftTree (acc + 1)) (findCat' rightTree (acc + 1))
+
+findCat2 :: Tree (Maybe Cat) -> [Char] --Если кота нет, то напечатает ""
+findCat2 a = findCat2' a []
+        where findCat2' Empty acc = []
+              findCat2' (Leaf maybeCat) acc = if isJust maybeCat then acc else []
+              findCat2' (Node leftTree maybeCat rightTree) acc | isJust maybeCat = acc
+                                                               | otherwise = maximumBy (compare`on`length) [(findCat2' leftTree (acc ++ ['L'])), (findCat2' rightTree (acc ++ ['R']))]
+
 --task 2
 data Suit = Hearts | Tiles | Clovers | Pikes
         deriving Eq
