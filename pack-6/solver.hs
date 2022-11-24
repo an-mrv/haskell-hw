@@ -16,7 +16,7 @@ tree1 = Node Empty Nothing (Node (Node (Leaf Nothing) Nothing (Node Empty Nothin
 findCat :: Tree (Maybe Cat) -> Int --Если кота нет, то напечатает 0
 findCat a = findCat' a 0
         where findCat' Empty acc = acc
-              findCat' (Leaf maybeCat) acc = if isJust maybeCat then acc else 0
+              findCat' (Leaf maybeCat) acc = if isJust maybeCat then acc + 1 else 0
               findCat' (Node leftTree maybeCat rightTree) acc | isJust maybeCat = acc
                                                               | otherwise = max (findCat' leftTree (acc + 1)) (findCat' rightTree (acc + 1))
 
