@@ -1,5 +1,6 @@
 --task 1
 (!!!) :: [a] -> Int -> a
+(!!!) [] _ = error "Empty list"
 (!!!) (x:xs) n | (n == 0) = x
                | (n < 0 || n >= length (x:xs)) = error "Index out of range"   
                | otherwise = (!!!) xs (n - 1)
