@@ -100,9 +100,9 @@ transposition m = [[m !! a !! b | a <- [0..(length (m) - 1)]] | b <- [0..(length
 
 --task 8
 checker :: Int -> Bool
-checker a = checker' a 0
-checker' a n | (a == 1) = True
-             | (n == 10000) = False
-             | otherwise = checker' (summ_of_squares a 0) (n + 1) 
+checker a = checker' a []
+checker' a s | (a == 1) = True
+             | (a `elem` s) = False
+             | otherwise = checker' (summ_of_squares a 0) (a : s) 
         where summ_of_squares a acc | (a == 0) = acc
                                     | otherwise = summ_of_squares (a `div` 10) (acc + (a `mod` 10) ^ 2) 
