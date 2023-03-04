@@ -50,9 +50,12 @@ tailMay (x:xs) = Just xs
 -}
 queryGreek :: GreekData -> String -> Maybe Double
 queryGreek a s = func (helper a s 0)
+
 helper :: GreekData -> String -> Int -> [Integer]
-helper a s n | (fst(a !! n) == s) = snd(a !! n)
+helper a s n | (n == length a) = []
+             | (fst(a !! n) == s) = snd(a !! n)
              | otherwise = helper a s (n + 1)
+             
 func :: [Integer] -> Maybe Double
 func xs | ((tailMay xs == Nothing) || ((maximumMay $ fromJust (tailMay xs)) == Nothing) || (headMay xs) == Nothing) = Nothing
         | otherwise = divMay (fromIntegral $ fromJust (maximumMay $ fromJust (tailMay xs))) (fromIntegral $ fromJust (headMay xs)) 
