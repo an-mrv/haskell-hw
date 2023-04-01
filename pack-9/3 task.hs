@@ -77,17 +77,19 @@ interpretMany (x:xs) = do
 interpretOne :: Command -> State InterpreterState ()
 interpretOne a = do
     s <- get
-    if ((find_name s (varName a)) && (isLiteral (whatToPut a))) 
-        then put (change_val s (varName a) (getValue(whatToPut a)) [])
+    let nameExists = find_name s (varName a)
+    let is_literal = isLiteral (whatToPut a)
+    let value = getValue(whatToPut a)
+    if (nameExists && is_literal) 
+        then put (change_val s (varName a) value [])
         else 
-            if ((not(find_name s (varName a))) && (isLiteral (whatToPut a)))
-                then put (s ++ [(varName a, (getValue (whatToPut a)))])
+            if (not(nameExists) && is_literal)
+                then put (s ++ [(varName a, value)])
                 else
-                    if ((not(find_name s (varName a))) && not(isLiteral (whatToPut a)))
-                        then put (s ++ [(varName a, find_val s (getValue (whatToPut a)))])
+                    if (not(nameExists) && not(is_literal))
+                        then put (s ++ [(varName a, find_val s value)])
                         else
-                            put (change_val s (varName a) (find_val s (getValue(whatToPut a))) [])
-        
+                            put (change_val s (varName a) (find_val s value) [])
 
 find_name :: InterpreterState -> String -> Bool
 find_name s name | (s == []) = False

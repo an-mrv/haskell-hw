@@ -66,7 +66,7 @@ func xs | ((tailMay xs == Nothing) || ((maximumMay $ fromJust (tailMay xs)) == N
 
 queryGreekPro :: GreekData -> String -> Maybe Double
 queryGreekPro a s = do
-    xs <- Just $ helper a s 0
+    let xs = helper a s 0
     h <- headMay xs
     t <- tailMay xs
     maxx <- maximumMay t
