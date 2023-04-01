@@ -90,5 +90,5 @@ prettyBoard :: (Int, Int) -> (Int, Int) -> IO()
 prettyBoard a b = putStrLn $ helper a b 0 []
 
 canAttack :: (Int, Int) -> (Int, Int) -> Bool
-canAttack a b | ((fst a == fst b) || (snd a == snd b) || (fst a - snd a == fst b - snd b) || (fst a + snd a == fst b + snd b)) = True
-              | otherwise = False
+canAttack (x1, y1) (x2, y2) | ((x1 == x2) || (y1 == y2) || (x1 - y1 == x2 - y2) || (x1 + y1 == x2 + y2)) = True
+                            | otherwise = False
