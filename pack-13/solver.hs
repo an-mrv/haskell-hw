@@ -29,20 +29,25 @@ makeSureUserIsComfortableGivingInformation :: String -> MaybeT IO ()
 makeSureUserIsComfortableGivingInformation infoName = do
   lift $ putStr $ "Are you ok sharing " ++ infoName ++ "?\n"
   input <- lift getLine
-  lift $ putStr $ "User has responded with " ++ input ++ "\n"
   guard (input == "yes") 
   return ()
+
+--runMaybeT $ makeSureUserIsComfortableGivingInformation "smth"
 
 -- example purposes. This MaybeT function always fails
 nothingExample :: MaybeT IO ()
 nothingExample = do
     guard False
 
+-- you can run this using runGetUserInfo
 getUserInfo :: WriterT Log (MaybeT IO) UserInfo
 getUserInfo = do
   n <- getUserName
+  tell ["User has responded with yes"]
   ad <- getUserAddress
+  tell ["User has responded with yes"]
   s <- getUserSalary
+  tell ["User has responded with yes"]
   return $ UserInfo ad n s
 
 getUserSalary :: WriterT Log (MaybeT IO) Int
